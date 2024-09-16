@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    | Details
+{% endblock title %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+    <div class="container mt-5">
+        <div class="card mb-4 shadow-lg border-light rounded">
+            <div class="card-body">
+                <!-- Customer Name -->
+                <h5 class="card-title mb-3">
+                    <span class="font-weight-bold text-primary">{{ customer.name }} {{ customer.last_name }}</span>
+                </h5>
+                <hr>
+
+                <!-- Customer Details -->
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <p class="card-text"><strong>Number:</strong> <span class="text-muted">{{ customer.number }}</span></p>
+                        <p class="card-text"><strong>Country:</strong> <span class="text-muted">{{ customer.country }}</span></p>
+                        <p class="card-text"><strong>City:</strong> <span class="text-muted">{{ customer.city }}</span></p>
+                        <p class="card-text"><strong><a href="{% url 'Category' customer.category.customer_country_catalog %}">Category:</a></strong> <span class="text-muted">{{ customer.category }}</span></p>
+                    </div>
+                    <div class="col-md-6">
+                        <p class="card-text"><strong>Situation:</strong> <span class="text-muted">{{ customer.situation }}</span></p>
+                        <p class="card-text"><strong>Date:</strong> <span class="text-muted">{{ customer.post_date|date:"d M Y" }}</span></p>
+                    </div>
+                </div>
+                <hr>
+                
+                <!-- Author and Actions -->
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <p class="card-text mb-2 text-muted">
+                        <small>Author: {{ customer.author }}</small>
+                    </p>
+                    <a href="{% url 'home' %}" class="btn btn-dark">Back</a>
+                </div>
+
+                <h2 class="mt-4 mb-4">Other Customers by {{ customer.author.username }}</h2>
+                <div class="list-group">
+                    {% for other_customer in author_customers %}
+                        <a href="{% url 'Post-Detalis' other_customer.pk %}" class="list-group-item list-group-item-action">
+                            {{ forloop.counter }}. {{ other_customer.name }} {{ other_customer.last_name }}
+                            <span class="badge bg-light text-dark float-right">{{ other_customer.post_date|date:"d M Y" }}</span>
+                        </a>
+                    {% empty %}
+                        <p class="text-center">No other customers available.</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% else %}
+        <div class="text-center mt-5">
+            <h1>You need to be logged in to view this page.</h1>
+        </div>
+    {% endif %}
+{% endblock content %}

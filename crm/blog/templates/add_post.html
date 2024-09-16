@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    | Add Customer
+{% endblock title %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <h1 class="text-black">Please enter customer information!</h1>
+                        <form method="post">
+                            {% csrf_token %}
+                            {{ form.as_p }}
+                            {% if user.is_authenticated %}
+                                <button type="submit" class="btn btn-dark">Add</button>
+                            {% endif %}
+
+                            <script>
+                                var name = "{{user.id}}";
+                                document.getElementById("faysa").value = name;
+
+                            </script>
+                        </form>
+                        <hr>
+                        <br>
+                        <a href="{% url 'home' %}" class="btn btn-dark">Back</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <h1>Please login <a href="{url 'login'}">login</a></h1>
+    {% endif %}
+<br>
+{% endblock content %}

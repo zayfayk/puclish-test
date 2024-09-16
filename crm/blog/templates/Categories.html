@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block title %}
+   | {{ cats }} Categories
+{% endblock title %}
+
+{% block content %}
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">{{ cats }} Categories</h1>
+
+        {% for customer in category_post %}
+        <div class="card mb-4 shadow-lg border-light rounded">
+            <div class="card-body">
+                <h5 class="card-title mb-3">
+                    <span class="font-weight-bold text-black">{{ customer.name }} {{ customer.last_name }}</span>
+                </h5>
+                <hr>
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <p class="card-text"><strong>Number:</strong> <span class="text-muted">{{ customer.number }}</span></p>
+                        <p class="card-text"><strong>Country:</strong> <span class="text-muted">{{ customer.country }}</span></p>
+                        <p class="card-text"><strong>City:</strong> <span class="text-muted">{{ customer.city }}</span></p>
+                        <p class="card-text"><strong>Category:</strong> <span class="text-muted">{{ customer.category }}</span></p>
+                    </div>
+                    <div class="col-md-6">
+                        <p class="card-text"><strong>Situation:</strong> <span class="text-muted">{{ customer.situation }}</span></p>
+                        <p class="card-text"><strong>Date:</strong> <span class="text-muted">{{ customer.post_date }}</span></p>
+                    </div>
+                </div>
+                <hr>
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <p class="card-text mb-2 text-muted">
+                        <small>Author: {{ customer.author }}</small>
+                    </p>
+                    <a href="{% url 'home' %}" class="btn btn-dark">Back</a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+            <p class="text-center">No customers found in this category.</p>
+            <a href="{% url 'home' %}" class="btn btn-dark">Back</a>
+        {% endfor %}
+    </div>
+{% endblock content %}

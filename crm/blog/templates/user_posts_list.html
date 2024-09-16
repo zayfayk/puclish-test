@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    | User Posts
+{% endblock title %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1>Posts by {{ user.username }}</h1>
+    <div class="list-group">
+        {% for customer in customers %}
+            <a href="{% url 'Post-Detalis' customer.pk %}" class="list-group-item list-group-item-action">
+                {{ forloop.counter }}. {{ customer.name }} {{ customer.last_name }} - {{ customer.situation }} <h6>date : {{customer.post_date}}</h6>
+            </a>
+        {% empty %}
+            <p>This user has not posted anything yet.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock content %}

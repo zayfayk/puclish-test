@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% block title %}
+   | Home
+{% endblock title %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        {% if user.is_authenticated %}
+        <div class="col-md-8">
+            <div class="title-box mb-4 p-3">
+                <h1 class="text-center mb-0">Leads</h1>
+            </div>
+        </div>
+            <div class="col-md-10">
+                {% for customer in object_list %}
+                    <div class="card mb-4 shadow-lg border-light rounded">
+                        <div class="card-body">
+                            <h5 class="card-title mb-3">
+                                <span class="font-weight-bold text-black">{{ customer.name }} {{ customer.last_name }}</span>
+                            </h5>
+                            <hr>
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <p class="card-text"><strong>Number:</strong> <span class="text-muted">{{ customer.number }}</span></p>
+                                    <p class="card-text"><strong>Country:</strong> <span class="text-muted">{{ customer.country }}</span></p>
+                                    <p class="card-text"><strong>City:</strong> <span class="text-muted">{{ customer.city }}</span></p>
+                                    <p class="card-text"><strong><a href="{% url 'Category' customer.category.customer_country_catalog %}">Category:</a></strong> <span class="text-muted">{{ customer.category }}</span></p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p class="card-text"><strong>Situation:</strong> <span class="text-muted">{{ customer.situation }}</span></p>
+                                    <p class="card-text"><strong>Date:</strong> <span class="text-muted">{{ customer.post_date }}</span></p>
+                                </div>
+                            </div>
+                            <hr>
+                            <p class="card-text mb-2 text-muted">
+                                <small>Author: {{ customer.author }}</small>
+                            </p>
+                            <a href="{% url 'Post-Detalis' customer.pk %}" class="btn btn-primary btn-block">View Details</a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+        <div class="text-center mt-5">
+            <h1 class="display-4">Welcome to CRM</h1>
+            <p class="lead">Please log in or sign up to continue.</p>
+            <div class="mt-4">
+                <a href="{% url 'register' %}" class="btn btn-secondary btn-lg">Sign Up</a>
+                <a href="{% url 'login' %}" class="btn btn-secondary btn-lg ml-2">Login</a>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock content %}
